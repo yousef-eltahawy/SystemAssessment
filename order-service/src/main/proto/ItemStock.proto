@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package grpc;
+option java_package = "com.assessment.orderservice.grpc";
+option java_multiple_files = true;
+
+service ItemStockService {
+  rpc consumeStock(ConsumeStockListRequest) returns (ConsumeStockListResponse);
+}
+
+message ConsumeStockRequest {
+  string itemCode = 1;
+  int32 quantity = 2;
+}
+
+message ConsumeStockResponse {
+  bool available = 1;
+  int32 availableQty = 2;
+  int32 requiredQty = 3;
+  string itemCode = 4;
+  string itemName = 5;
+  string price = 6;
+}
+
+message ConsumeStockListRequest {
+  repeated ConsumeStockRequest requests = 1;
+}
+
+message ConsumeStockListResponse {
+  repeated ConsumeStockResponse responses = 1;
+}

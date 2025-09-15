@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  inventory-service:
+    build: ./inventory-service
+    container_name: inventory-service
+    ports:
+      - "8081:8081"
+      - "9091:9091"
+    networks:
+      - app-net
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    ports:
+      - "8080:8080"
+    environment:
+      - GRPC_CLIENT_ITEMSTOCKSERVICE_ADDRESS=static://inventory-service:9090
+      - GRPC_CLIENT_ITEMSTOCKSERVICE_NEGOTIATIONTYPE=plaintext
+    depends_on:
+      - inventory-service
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
