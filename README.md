@@ -105,3 +105,13 @@ Inventory Service Swagger: http://localhost:8081/swagger-ui/index.html
 ### 5. stop services:
 
 docker-compose down
+
+===========>>>>>> important note <<<<<<================
+
+- in application.properties for Order Service
+
+# For local dev (running Inventory service directly on your machine)
+grpc.client.itemStockService.address=static://localhost:9090
+
+# For Docker (services communicate by container name in the Docker network)
+grpc.client.itemStockService.address=static://inventory-service:9090
